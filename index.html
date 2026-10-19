@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Discover ready-made fashion and custom clothing on StyleHub. Browse independent designers, explore their collections, and find pieces made for your style.">
+  <title>StyleHub | Shop Independent Fashion & Custom Clothing</title>
+  <meta
+    name="description"
+    content="Shop ready-made fashion and request custom clothing from independent designers on StyleHub. Discover designer collections and find clothes that fit your style."
+  >
+  <meta name="application-name" content="StyleHub">
+  <meta name="theme-color" content="#f8f6f1">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="StyleHub | Independent Fashion & Custom Clothing">
+  <meta
+    property="og:description"
+    content="Discover ready-made fashion, explore independent designers, and request custom clothing made for your style."
+  >
+  <meta property="og:image" content="images/stylehub-share-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="StyleHub | Independent Fashion & Custom Clothing">
+  <meta
+    name="twitter:description"
+    content="Shop independent designers and request custom-made clothing on StyleHub."
+  >
+  <meta name="twitter:image" content="images/stylehub-share-image.jpg">
+
+  <link rel="icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="stylesheet" href="asset/css/stle.css">
+</head>
+
+<body>
+
+    </head>
+
+    <body>
+        <header class="heropage">
+           
+              <a href="#"><img src="asset/images/style hub logo.png" alt="logo" width="10%"></a>
+           
+
+            <nav aria-label="Main navigation">
+                <a href="#shop">Shop</a>
+                <a href="#designers">Designers</a>
+                <a href="#custom">Custom orders</a>
+            </nav>
+
+            <div>
+                <button type="button" onclick="openLogin('buyer')">Buyer login</button>
+                <button type="button" onclick="openLogin('designer')">Designer login</button>
+            </div>
+        </header>
+
+        <main id="home">
+            <section>
+                <p>Independent fashion, made personal</p>
+                <h1>Find your style. Meet your designer.</h1>
+                <p>Shop ready-made clothing or request a custom piece from an independent designer.</p>
+                <a href="#shop">Browse clothes</a>
+                <a href="#custom">Request custom clothing</a>
+            </section>
+
+            <section id="shop">
+                <h2>Shop clothing</h2>
+                <p>Select an item to see its designer and their other products.</p>
+
+                <div aria-label="Product filters">
+                    <button type="button" data-filter="all">All</button>
+                    <button type="button" data-filter="ready">Ready-made</button>
+                    <button type="button" data-filter="custom">Made to order</button>
+                </div>
+
+                <div id="product-list"></div>
+            </section>
+
+            <section id="designers">
+                <h2>Meet the designers</h2>
+                <div id="designer-list"></div>
+            </section>
+
+            <section id="custom">
+                <h2>Request a custom design</h2>
+                <p>Choose a designer and describe what you would like made.</p>
+
+                <form id="custom-form">
+                    <label>
+                        Your name
+                        <input name="name" required>
+                    </label>
+
+                    <label>
+                        Email address
+                        <input name="email" type="email" required>
+                    </label>
+
+                    <label>
+                        Designer
+                        <select name="designer" id="designer-choice" required></select>
+                    </label>
+
+                    <label>
+                        Type of clothing
+                        <select name="garment" required>
+                            <option value="">Choose one</option>
+                            <option>Dress</option>
+                            <option>Top or blouse</option>
+                            <option>Two-piece set</option>
+                            <option>Traditional wear</option>
+                            <option>Other</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Describe your idea
+                        <textarea name="description" rows="5" required></textarea>
+                    </label>
+
+                    <button type="submit">Preview request</button>
+                    <p id="custom-notice" aria-live="polite"></p>
+                </form>
+            </section>
+
+            <section id="buyer-area" hidden>
+                <h2>Buyer area</h2>
+                <p>You are viewing the buyer demo. Browse products and choose a designer to see their items.</p>
+            </section>
+
+            <section id="designer-area" hidden>
+                <h2>Designer dashboard preview</h2>
+                <p>This demo dashboard shows where designers could manage products and requests.</p>
+
+                <form id="product-form">
+                    <label>
+                        Product name
+                        <input name="productName" required>
+                    </label>
+
+                    <label>
+                        Price in naira
+                        <input name="price" type="number" min="0" required>
+                    </label>
+
+                    <label>
+                        Product type
+                        <select name="type">
+                            <option value="ready">Ready-made</option>
+                            <option value="custom">Made to order</option>
+                        </select>
+                    </label>
+
+                    <button type="submit">Add demo product</button>
+                    <p id="designer-notice" aria-live="polite"></p>
+                </form>
+            </section>
+        </main>
+
+        <dialog id="login-dialog">
+            <button type="button" onclick="closeLogin()">Close</button>
+            <h2 id="login-title">Sign in</h2>
+
+            <form id="login-form">
+                <label>
+                    Email address
+                    <input name="email" type="email" required>
+                </label>
+
+                <label>
+                    Password
+                    <input name="password" type="password" required minlength="8">
+                </label>
+
+                <button type="submit">Continue</button>
+            </form>
+
+            <p>Demo only: this form does not authenticate or create an account.</p>
+        </dialog>
+
+        <dialog id="product-dialog">
+            <button type="button" onclick="document.getElementById('product-dialog').close()">Close</button>
+            <div id="product-detail"></div>
+        </dialog>
+
+        <footer>
+            <p>StyleHub connects buyers with independent fashion designers.</p>
+            <p>Frontend demo only. Real accounts, messages, orders, and payments require a backend.</p>
+        </footer>
+
+        <script>
+            // Demo data. A backend would store real accounts, products, and orders.
+            const designers = [
+                {
+                    id: "amina",
+                    name: "Amina Designs",
+                    location: "Lagos",
+                    specialty: "Dresses and everyday clothing",
+                    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80"
+                },
+                {
+                    id: "kemi",
+                    name: "Kemi Studio",
+                    location: "Abuja",
+                    specialty: "Custom occasion wear",
+                    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=700&q=80"
+                },
+                {
+                    id: "ola",
+                    name: "K-Prime Outfits",
+                    location: "Port Harcourt",
+                    specialty: "Shirts, Trousers, Traditional attireand relaxed sets",
+                    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=700&q=80"
+                }
+            ];
+
+            const products = [
+                {
+                    id: 1,
+                    name: "Patterned Day Dress",
+                    designerId: "amina",
+                    type: "ready",
+                    price: 45000,
+                    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=80"
+                },
+                {
+                    id: 2,
+                    name: "Custom Occasion Dress",
+                    designerId: "kemi",
+                    type: "custom",
+                    price: 90000,
+                    image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=700&q=80"
+                },
+                {
+                    id: 3,
+                    name: "Everyday Linen Shirt",
+                    designerId: "ola",
+                    type: "ready",
+                    price: 38000,
+                    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=80"
+                },
+                {
+                    id: 4,
+                    name: "Custom Two-Piece Outfit",
+                    designerId: "amina",
+                    type: "custom",
+                    price: 70000,
+                    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=80"
+                },
+                {
+                    id: 5,
+                    name: "Relaxed Studio Set",
+                    designerId: "ola",
+                    type: "ready",
+                    price: 62000,
+                    image: "https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=700&q=80"
+                },
+                {
+                    id: 6,
+                    name: "Made-to-measure Kaftan",
+                    designerId: "kemi",
+                    type: "custom",
+                    price: 85000,
+                    image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?auto=format&fit=crop&w=700&q=80"
+                }
+            ];
+
+            let currentRole = "buyer";
+            let currentFilter = "all";
+
+            function formatPrice(amount) {
+                return "₦" + amount.toLocaleString("en-NG");
+            }
+
+            function getDesigner(id) {
+                return designers.find(designer => designer.id === id);
+            }
+
+            function renderProducts() {
+                const shownProducts = products.filter(product =>
+                    currentFilter === "all" || product.type === currentFilter
+                );
+
+                document.getElementById("product-list").innerHTML = shownProducts.map(product => {
+                    const designer = getDesigner(product.designerId);
+                    const typeLabel = product.type === "ready" ? "Ready-made" : "Made to order";
+
+                    return `
+          <article>
+            <img src="${product.image}" alt="${product.name}" width="200">
+            <p>${typeLabel}</p>
+            <h3>${product.name}</h3>
+            <p>${designer.name} · ${formatPrice(product.price)}</p>
+            <button type="button" onclick="showProduct(${product.id})">View product</button>
+            <button type="button" onclick="showDesignerProducts('${designer.id}')">More from designer</button>
+          </article>
+        `;
+                }).join("");
+            }
+
+            function renderDesigners() {
+                document.getElementById("designer-list").innerHTML = designers.map(designer => `
+        <article>
+          <img src="${designer.image}" alt="${designer.name}" width="200">
+          <h3>${designer.name}</h3>
+          <p>${designer.location} · ${designer.specialty}</p>
+          <button type="button" onclick="showDesignerProducts('${designer.id}')">See designer's products</button>
+        </article>
+      `).join("");
+
+                document.getElementById("designer-choice").innerHTML =
+                    '<option value="">Choose a designer</option>' +
+                    designers.map(designer =>
+                        `<option value="${designer.id}">${designer.name}</option>`
+                    ).join("");
+            }
+
+            function showDesignerProducts(designerId) {
+                const designer = getDesigner(designerId);
+                const designerProducts = products.filter(product => product.designerId === designerId);
+
+                document.getElementById("product-list").innerHTML = `
+        <h3>Products by ${designer.name}</h3>
+        <button type="button" onclick="renderProducts()">Show all products</button>
+        ${designerProducts.map(product => `
+          <article>
+            <img src="${product.image}" alt="${product.name}" width="200">
+            <p>${product.type === "ready" ? "Ready-made" : "Made to order"}</p>
+            <h3>${product.name}</h3>
+            <p>${formatPrice(product.price)}</p>
+            <button type="button" onclick="showProduct(${product.id})">View product</button>
+          </article>
+        `).join("")}
+      `;
+
+                document.getElementById("shop").scrollIntoView({behavior: "smooth"});
+            }
+
+            function showProduct(productId) {
+                const product = products.find(item => item.id === productId);
+                const designer = getDesigner(product.designerId);
+
+                document.getElementById("product-detail").innerHTML = `
+        <img src="${product.image}" alt="${product.name}" width="250">
+        <h2>${product.name}</h2>
+        <p>${product.type === "ready" ? "Ready-made" : "Made to order"} · ${formatPrice(product.price)}</p>
+        <h3>Designed by ${designer.name}</h3>
+        <p>${designer.location} · ${designer.specialty}</p>
+        <button type="button" onclick="contactDesigner('${designer.id}')">Contact this designer</button>
+        <button type="button" onclick="showDesignerProducts('${designer.id}'); document.getElementById('product-dialog').close()">See this designer's products</button>
+      `;
+
+                document.getElementById("product-dialog").showModal();
+            }
+
+            function contactDesigner(designerId) {
+                const designer = getDesigner(designerId);
+                document.getElementById("product-dialog").close();
+                document.getElementById("designer-choice").value = designerId;
+                document.getElementById("custom").scrollIntoView({behavior: "smooth"});
+                document.getElementById("custom-notice").textContent =
+                    `Custom request is set to ${designer.name}. This is only a demo.`;
+            }
+
+            function openLogin(role) {
+                currentRole = role;
+                document.getElementById("login-title").textContent =
+                    role === "buyer" ? "Buyer sign in" : "Designer sign in";
+                document.getElementById("login-dialog").showModal();
+            }
+
+            function closeLogin() {
+                document.getElementById("login-dialog").close();
+            }
+
+            document.querySelectorAll("[data-filter]").forEach(button => {
+                button.addEventListener("click", () => {
+                    currentFilter = button.dataset.filter;
+                    renderProducts();
+                });
+            });
+
+            document.getElementById("login-form").addEventListener("submit", event => {
+                event.preventDefault();
+                closeLogin();
+
+                const buyerArea = document.getElementById("buyer-area");
+                const designerArea = document.getElementById("designer-area");
+
+                buyerArea.hidden = currentRole !== "buyer";
+                designerArea.hidden = currentRole !== "designer";
+
+                (currentRole === "buyer" ? buyerArea : designerArea)
+                    .scrollIntoView({behavior: "smooth"});
+
+                alert("Demo only: no account was authenticated.");
+            });
+
+            document.getElementById("custom-form").addEventListener("submit", event => {
+                event.preventDefault();
+                const formData = new FormData(event.target);
+                const designer = getDesigner(formData.get("designer"));
+
+                document.getElementById("custom-notice").textContent =
+                    `Demo request preview for ${designer.name}. Nothing was sent or saved.`;
+
+                event.target.reset();
+            });
+
+            document.getElementById("product-form").addEventListener("submit", event => {
+                event.preventDefault();
+                document.getElementById("designer-notice").textContent =
+                    "Demo only: the product was not saved. Product management needs a backend.";
+                event.target.reset();
+            });
+
+            renderProducts();
+            renderDesigners();
+        </script>
+    </body>
+
+</html>
